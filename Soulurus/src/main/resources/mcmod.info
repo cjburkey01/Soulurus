@@ -1,0 +1,16 @@
+[
+{
+  "modid": "soul",
+  "name": "Soulurus",
+  "description": "Capture the souls of mobs and use them to spawn more of them.  (Perfect for spawers)",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://cjburkey.com/mods/",
+  "updateUrl": "http://cjburkey.com/mods/",
+  "authorList": ["CJ Burkey"],
+  "credits": "The Forge and FML guys, for making Forge.",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]
