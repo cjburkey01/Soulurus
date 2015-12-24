@@ -1,6 +1,8 @@
 package com.cjburkey.mods.soul.block.tile;
 
+import java.util.List;
 import java.util.Random;
+import com.cjburkey.mods.soul.Soulurus;
 import com.cjburkey.mods.soul.item.ITEMS;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -9,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class BlockSoulSpawnerTileEntity extends TileEntity {
@@ -48,6 +51,7 @@ public class BlockSoulSpawnerTileEntity extends TileEntity {
 	long ticks = 0;
 	long time;
 	
+	@SuppressWarnings("rawtypes")
 	public void updateEntity() {
 		time = (int) (5 - (((float) this.kills / (float) ITEMS.itemSoul.maxSouls) * 5)) + 1;
 		ticks ++;
@@ -62,14 +66,18 @@ public class BlockSoulSpawnerTileEntity extends TileEntity {
 			if(world.isBlockIndirectlyGettingPowered(x, y, z)) {
 				BlockSoulSpawnerTileEntity t = (BlockSoulSpawnerTileEntity) world.getTileEntity(x, y, z);
 				if(t != null && t.mobID > 0) {
-					int xadd = new Random().nextInt((2 - -2) + 1) + -2;
-					int zadd = new Random().nextInt((2 - -2) + 1) + -2;
-					x += (xadd != 0) ? xadd : 1;
-					z += (zadd != 0) ? zadd : 1;
+					int xadd = new Random().nextInt((Soulurus.spawnRadius - -Soulurus.spawnRadius) + 1) + -Soulurus.spawnRadius;
+					int zadd = new Random().nextInt((Soulurus.spawnRadius - -Soulurus.spawnRadius) + 1) + -Soulurus.spawnRadius;
+					x += xadd;
+					z += zadd;
 					
-					Entity ent = EntityList.createEntityByID(t.mobID, world);
-					ent.setPosition(x + 0.5, y - 1, z + 0.5);
-					world.spawnEntityInWorld(ent);
+					List entities = world.getEntitiesWithinAABB(EntityList.createEntityByID(t.mobID, world).getClass(), AxisAlignedBB.getBoundingBox(this.xCoord - 25, this.yCoord - 25, this.zCoord - 25, this.xCoord + 25, this.yCoord + 25, this.zCoord + 25));
+					
+					if(!(entities.size() >= Soulurus.maxEntities)) {
+						Entity ent = EntityList.createEntityByID(t.mobID, world);
+						ent.setPosition(x + 0.5, y - 1, z + 0.5);
+						world.spawnEntityInWorld(ent);
+					}
 				}
 			}
 		}

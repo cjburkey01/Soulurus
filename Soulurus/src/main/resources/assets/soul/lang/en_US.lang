@@ -3,5 +3,6 @@ item.itemCreativeSoul.name=Cheaty Soulcerer's Cache
 
 tile.blockSpawner.name=Soul Spawner Block
 tile.blockWiper.name=Soulcerer's Chache Wiper
+tile.blockPlayerInteract.name=Soulcerer's Player Interaction Block
 
 itemGroup.tabSoulurus=Soulurus Items and Blocks
